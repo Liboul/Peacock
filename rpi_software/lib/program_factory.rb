@@ -4,6 +4,7 @@ require 'pry'
 
 require_relative './program'
 require_relative './components/led_group'
+require_relative './components/speakers'
 
 class ProgramFactory
 
@@ -25,7 +26,8 @@ class ProgramFactory
       raise StandardError.new("Component #{component_name} is not supported. Check your device_config.yml")
     end
     component_class = "Components::#{device_config[component_name]['class']}".constantize
-    component_class.new(device_config[component_name]['args'].symbolize_keys)
+
+    device_config[component_name]['args'].present? ? component_class.new(device_config[component_name]['args'].symbolize_keys) : component_class.new
   end
 
   # @return [Hash] containing the whole configuration

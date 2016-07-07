@@ -38,7 +38,7 @@ module Components
     # Puts the list of arguments
     def build_instruction_args(instruction, arg_list)
       instruction_with_args = instruction.dup
-      instruction_with_args[:args] = Hash.new(instruction_with_args.select {|k, _| arg_list.include? k})
+      instruction_with_args['args'] = instruction_with_args.select {|k, _| arg_list.include? k}
       instruction_with_args.except(arg_list)
     end
 
@@ -61,7 +61,7 @@ module Components
 
     def execute_waiting_instruction
       instruction_def = @core_instructions.shift
-      instruction_def['args'].present? ? send(instruction_def['command'], **instruction_def['args']) :send(instruction_def['command'])
+      instruction_def['args'].present? ? send(instruction_def['command'], **instruction_def['args'].symbolize_keys) :send(instruction_def['command'])
     end
   end
 end

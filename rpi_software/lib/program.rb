@@ -34,7 +34,7 @@ class Program
     while has_remaining_core_instructions? and (Time.current - start_time) < MAX_EVENT_LOOP_TIME
       loop_beginning = Time.current
       @components.each do |component|
-        component.execute_waiting_instructions if component.has_to_execute_instruction?((Time.current - start_time) * 1000)
+        component.execute_waiting_instruction if component.has_to_execute_instruction?((Time.current - start_time) * 1000)
       end
       sleep([MIN_SLEEP, (REFRESH_RATE / 1000) - (Time.current - loop_beginning)].max)
     end

@@ -32,7 +32,7 @@ module Components
 
     # Releases all the pins that have been reserved
     def release_pins
-      @pin_numbers.each do |pin|
+      pin_numbers.each do |pin|
         File.open('/sys/class/gpio/unexport', 'w') {|f| f.write("#{pin}")}
       end
     end

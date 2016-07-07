@@ -18,7 +18,7 @@ module Components
 
     # Gives access to the pin
     def pin
-      @pin ||= PiPiper::Pin.new(:pin => pin.to_i, :direction => :out)
+      @pin ||= PiPiper::Pin.new(:pin => @pin_number.to_i, :direction => :out)
     end
 
     ## Core instructions

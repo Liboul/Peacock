@@ -1,0 +1,4 @@
+arms_down:
+  class: 'LedGroup'
+  args:
+    pin_number: 6

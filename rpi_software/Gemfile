@@ -1,4 +1,11 @@
 source 'https://rubygems.org/'
 
+gem 'activesupport'
+
 gem 'pi_piper'
+
+gem 'pry'
+gem 'pry-byebug'
+
 gem 'sinatra'
+gem 'sinatra-param'

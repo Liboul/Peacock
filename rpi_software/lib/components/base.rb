@@ -19,7 +19,12 @@ module Components
       instructions.each do |instruction|
         @core_instructions += parse_instruction(instruction)
       end
+      @core_instructions << core_command_duration_to_timestamp({'command'=> 'turn_off', 'duration': '0'})
       self
+    end
+
+    # To be overwritten
+    def turn_off
     end
 
     # Adds an instruction
@@ -30,15 +35,18 @@ module Components
       core_instruction_spec
     end
 
+    # Puts the list of arguments
+    def build_instruction_args(instruction, arg_list)
+      instruction_with_args = instruction.dup
+      instruction_with_args[:args] = Hash.new(instruction_with_args.select {|k, _| arg_list.include? k})
+      instruction_with_args.except(arg_list)
+    end
+
     # Releases all the pins that have been reserved
     def release_pins
       pin_numbers.each do |pin|
         File.open('/sys/class/gpio/unexport', 'w') {|f| f.write("#{pin}")}
       end
-    end
-
-    def execute_instructions
-
     end
 
     def has_remaining_instructions?
@@ -53,7 +61,7 @@ module Components
 
     def execute_waiting_instruction
       instruction_def = @core_instructions.shift
-      send(instruction_def['command'])
+      instruction_def['args'].present? ? send(instruction_def['command'], **instruction_def['args']) :send(instruction_def['command'])
     end
   end
 end

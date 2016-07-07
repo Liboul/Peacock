@@ -2,3 +2,8 @@ arms_down:
   class: 'LedGroup'
   args:
     pin_number: 6
+
+speakers:
+  class: 'Speakers'
+  args:
+
